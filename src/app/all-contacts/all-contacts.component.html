@@ -1,0 +1,70 @@
+<app-filtration-component
+  (selectedValue)="onSelect($event)"
+  (searching)="searchingKey($event)"
+></app-filtration-component>
+
+<h1>Contact List</h1>
+<div class="new-contact">
+  <label for="name">Enter contact name</label>
+  <input #nameValue type="text" name="name" />
+  <label for="phoneNumber">Enter phone No</label>
+  <input #numberValue type="text" name="phoneNumber" />
+  <label for="email">Enter Email</label>
+  <input #emailValue type="email" name="email" />
+  <button (click)="add(nameValue.value, numberValue.value, emailValue.value)">
+    Add New Contact
+  </button>
+</div>
+<table>
+  <thead>
+    <th>No.</th>
+    <th>Name</th>
+    <th>Phone No</th>
+    <th>Email</th>
+    <th>Edit contact</th>
+    <th>Delete Contact</th>
+  </thead>
+  <tbody *ngFor="let contact of foundContacts; let i = index">
+    <td>{{ i + 1 }}</td>
+    <td [ngSwitch]="contact.editState">
+      <div *ngSwitchCase="0">{{ contact.name }}</div>
+      <div *ngSwitchCase="1">
+        <input
+          [(ngModel)]="name"
+          type="text"
+          name="title"
+          [value]="contact.name"
+        />
+      </div>
+    </td>
+    <td [ngSwitch]="contact.editState">
+      <div *ngSwitchCase="0">{{ contact.phoneNumber }}</div>
+      <div *ngSwitchCase="1">
+        <input
+          [(ngModel)]="number"
+          type="text"
+          name="phone"
+          [value]="contact.phoneNumber"
+        />
+      </div>
+    </td>
+    <td [ngSwitch]="contact.editState">
+      <div *ngSwitchCase="0">{{ contact.email }}</div>
+      <div *ngSwitchCase="1">
+        <input [(ngModel)]="email" type="email" name="em" />
+      </div>
+    </td>
+    <td [ngSwitch]="contact.editState">
+      <div *ngSwitchCase="0">
+        <button (click)="changeEditState(contact.email)">Edit contact</button>
+      </div>
+      <div *ngSwitchCase="1">
+        <button (click)="saveEdit(contact.email)">Save</button>
+        <button (click)="changeEditState(contact.email)">Cancel</button>
+      </div>
+    </td>
+    <td>
+      <button (click)="deleteContact(contact.email)">Delete contact</button>
+    </td>
+  </tbody>
+</table>

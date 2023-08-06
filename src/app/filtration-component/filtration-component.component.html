@@ -1,0 +1,9 @@
+<select #val (change)="myFunction(val.value)" name="search" id="search">
+  <option value="0">All</option>
+  <option *ngFor="let select of selectors" [value]="select.id">
+    {{ select.title }}
+  </option>
+</select>
+
+<input #seachValue type="text" name="search" />
+<button (click)="clickOnSearch(seachValue.value)">search</button>
